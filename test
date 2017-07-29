@@ -1,0 +1,68 @@
+#! /bin/bash
+
+ci init.c
+ci application.c
+ci clean_up.c
+ci close_dev.c
+ci open_dev.c
+ci write_dev.c
+ci header.h
+ci declaration.h
+ci file_opr.h
+ci read_dev.c
+ci lseek_dev.c
+read
+co init.c
+co application.c
+co clean_up.c
+co close_dev.c
+co write_dev.c
+co open_dev.c
+co header.h
+co file_opr.h
+co read_dev.c
+co declaration.h
+co lseek_dev.c
+read
+if (make)
+then
+	echo "make successfully run"
+else
+	echo "make have error"
+fi
+read
+echo "Enter qset size"
+read qset_size1
+echo "Enter quantum size"
+read quantum_size1
+read
+insmod ./modules/shillu.ko nod=10 qset_size=$qset_size1 quantum_size=$quantum_size1
+read
+lsmod
+read
+dmesg
+read
+echo "Enter major no"
+read major_no
+mknod node c $major_no 0
+read
+gcc -o application application.c
+read
+echo "hold the script for writer"
+#./application node
+read
+gcc -o read_application read_application.c
+read
+#./read_application node
+read
+cat /proc/devices
+read
+rmmod shillu
+read
+dmesg
+read
+dmesg -c
+read
+cat /proc/devices
+unlink node
+           
